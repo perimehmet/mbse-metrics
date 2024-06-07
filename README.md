@@ -1,7 +1,7 @@
 # mbse-metrics
 Code repository for Enterprise Architect and Grafana SQL queries. 
 
-1. Download dockerappdata.zip, unzip and place in C:\
+1. Download [dockerappdata.zip](https://github.com/perimehmet/mbse-metrics/blob/main/dockerappdata.zip), unzip and place in C:\
 2. Install [docker desktop](https://www.docker.com/products/docker-desktop/) (for windows)
 3. Open command prompt and cd to C:\dockerappdata
 4. Run `docker compose up -d'
