@@ -72,6 +72,7 @@
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -83,7 +84,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE2",
@@ -454,7 +455,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE2",
@@ -465,7 +466,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select t_object.name as 'Rule', t_object.note as 'Rule Detail' from t_object\r\nleft join t_package on t_package.package_id = t_object.package_id\r\nwhere t_package.ea_guid = '{B127F7E6-A7AB-42cd-B364-05167C3F5832}'",
+          "rawSql": "select t_object.name as 'Rule', t_object.note as 'Rule Detail' from t_object\r\nleft join t_package on t_package.package_id = t_object.package_id\r\nwhere t_package.ea_guid = '{B127F7E6-A7AB-42cd-B364-05167C3F5832}'\r\norder by t_object.name",
           "refId": "A",
           "sql": {
             "columns": [
@@ -654,7 +655,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE2",
@@ -725,11 +726,10 @@
     "from": "now-30d",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "",
   "title": "Use Case Dashboard",
   "uid": "cdhfiry6evklcf",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }

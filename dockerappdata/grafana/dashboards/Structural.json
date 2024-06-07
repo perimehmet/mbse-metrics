@@ -72,6 +72,7 @@
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -83,7 +84,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE",
@@ -524,7 +525,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE2",
@@ -535,7 +536,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select t_object.name as 'Rule', t_object.note as 'Rule Detail' from t_object\r\nleft join t_package on t_package.package_id = t_object.package_id\r\nwhere t_package.ea_guid = '{BC87F8B5-A6F9-4721-82F4-0AF16EF2E949}'",
+          "rawSql": "select t_object.name as 'Rule', t_object.note as 'Rule Detail' from t_object\r\nleft join t_package on t_package.package_id = t_object.package_id\r\nwhere t_package.ea_guid = '{BC87F8B5-A6F9-4721-82F4-0AF16EF2E949}'\r\norder by t_object.name",
           "refId": "A",
           "sql": {
             "columns": [
@@ -724,7 +725,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.1.0-70958",
+      "pluginVersion": "11.1.0-71516",
       "targets": [
         {
           "dataset": "EA_MBSE2",
@@ -795,11 +796,10 @@
     "from": "now-30d",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "",
   "title": "Structural Dashboard",
   "uid": "cdhfirg25w268e",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }
