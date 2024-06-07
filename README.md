@@ -7,7 +7,8 @@ Code repository for Enterprise Architect and Grafana SQL queries.
 3. Start docker desktop and wait for the docker engine to start
 4. Open command prompt and cd to C:\dockerappdata
 5. Run `docker compose up -d'
-6. Navigate to http://localhost:3000 and login with admin / admin
-7. Connect EA to mysql database on localhost:3306 and login with root / PASSWORD123
+6. Copy "http://localhost:3000" and paste in browser
+7. Login with admin / admin
+8. Connect EA to mysql database on localhost:3306 and login with root / PASSWORD123
 
 Start playing!
