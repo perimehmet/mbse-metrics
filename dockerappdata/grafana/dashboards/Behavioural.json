@@ -1,0 +1,681 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 33,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [
+        "overview"
+      ],
+      "targetBlank": false,
+      "title": "",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0-70958",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "sum by(ElementStereotype) (elements{ElementStereotype=~\"activity|activitypartition|action|functionalrequirement\"})",
+          "format": "table",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Author": true,
+              "ElementStereotype": false,
+              "Time": true,
+              "Value": false,
+              "__name__": true,
+              "database": true,
+              "instance": true,
+              "job": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 7,
+        "x": 10,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "ruleValue{RuleType=\"Behaviour\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{Rule}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Rule Value History",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 7,
+        "x": 17,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "sum by(ElementStereotype) (elements{ElementStereotype=~\"activity|activitypartition|action|functionalrequirement\"})",
+          "format": "time_series",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{ElementStereotype}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Model Size History",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "ae511343-81ff-4ee9-8157-ac3f83decf4d"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rule"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 114
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 0,
+        "y": 3
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.0-70958",
+      "targets": [
+        {
+          "dataset": "EA_MBSE2",
+          "datasource": {
+            "type": "mysql",
+            "uid": "ae511343-81ff-4ee9-8157-ac3f83decf4d"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select t_object.name as 'Rule', t_object.note as 'Rule Detail' from t_object\r\nleft join t_package on t_package.package_id = t_object.package_id\r\nwhere t_package.ea_guid = '{B97C11CF-1017-4029-8CF7-A2CB9191BFF7}'",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "hidden"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 7,
+        "x": 0,
+        "y": 10
+      },
+      "id": 11,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.96,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "fdfe86a7-db47-43d9-b815-e17b77c4f3b3"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "ruleValue{RuleType=\"Behaviour\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": true,
+          "legendFormat": "{{Rule}}",
+          "range": false,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Rule Value History",
+      "transparent": true,
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "ae511343-81ff-4ee9-8157-ac3f83decf4d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 17,
+        "x": 7,
+        "y": 10
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.0-70958",
+      "targets": [
+        {
+          "dataset": "EA_MBSE2",
+          "datasource": {
+            "type": "mysql",
+            "uid": "ae511343-81ff-4ee9-8157-ac3f83decf4d"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select 'R-11' as 'Rule', to2.name as 'Element Name', to2.ea_guid as 'GUID' from t_object to2  \r\nleft join t_connector tc on tc.Start_Object_ID =  to2.Object_ID and tc.Stereotype = 'allocate'\r\nleft join t_object to3 on to3.object_id = tc.End_Object_ID and (to3.stereotype = 'block' or to3.object_type = 'Part')\r\nleft join t_object classifier on classifier.ea_guid = to2.Classifier_guid and classifier.object_type = 'Activity'\r\nleft join t_connector tc2 on tc2.Start_Object_ID =  classifier.Object_ID and tc2.Stereotype = 'allocate'\r\nleft join t_object to4 on to4.object_id = tc2.End_Object_ID and (to4.stereotype = 'block' or to4.object_type = 'Part')\r\nwhere to2.Object_Type in ('Action', 'Activity') and to3.object_id is null and to4.object_id is null\r\nunion all\r\nselect 'R-12' as 'Rule', t_object.name as 'Element Name', t_object.ea_guid as 'GUID' from t_object\r\nleft join t_object classifier on classifier.Object_ID = t_object.Classifier and classifier.Stereotype = 'block'\r\nwhere t_object.Object_Type  = 'ActivityPartition' and classifier.Object_ID is null\r\nunion all\r\nSelect 'R-13' as 'Rule', action_pin.name as 'Element Name', action_pin.ea_guid as 'GUID'from t_object as action_pin\r\nleft join t_object start_action on start_action.Object_ID = action_pin.ParentID\r\nleft join t_object start_partition on start_partition.Object_ID = start_action.ParentID\r\nleft join t_object start_classifier on start_classifier.object_id = start_partition.classifier\r\nleft join t_connector object_flow on (object_flow.Start_Object_ID = action_pin.Object_ID or object_flow.end_Object_ID = action_pin.Object_ID) and object_flow.Connector_Type = 'ObjectFlow'\r\nleft join t_object end_pin on (object_flow.Start_Object_ID = end_pin.Object_ID or object_flow.end_Object_ID = end_pin.Object_ID) and end_pin.object_type = 'ActionPin'\r\nleft join t_object end_action on end_action.Object_ID = end_pin.ParentID\r\nleft join t_object end_partition on end_partition.Object_ID = end_action.ParentID\r\nleft join t_object end_classifier on end_classifier.object_id = end_partition.classifier\r\nleft join t_connector start_allocate on start_allocate.start_object_id = action_pin.Object_ID and start_allocate.Stereotype = 'allocate'\r\nleft join t_object start_port on start_port.object_id = start_allocate.end_object_id\r\nleft join t_object start_object on start_object.object_id = start_port.parentID\r\nwhere action_pin.object_type = 'ActionPin' and end_partition.object_id <> start_partition.object_id \r\nand IFNULL(start_classifier.object_id,0) <> IFNULL(start_object.object_id,0)\r\nunion all\r\nselect 'R-14' as 'Rule', t_object.name as 'Element Name', t_object.ea_guid as 'GUID' from t_object\r\nleft join t_connector on t_connector.start_object_id = t_object.object_id\r\nwhere t_object.object_type = 'activity' and t_connector.connector_id is null\r\nunion all\r\nselect 'R-15' as 'Rule', to2.name as 'Element Name', to2.ea_guid as 'GUID' from t_object to2\r\nleft join t_object apartion on apartion.Object_ID =to2.ParentID\r\nleft join t_object partclassifier on partclassifier.Object_ID = apartion.Classifier and partclassifier.Stereotype = 'block'\r\nleft join t_connector tc on tc.Start_Object_ID =  to2.Object_ID and tc.Stereotype = 'allocate'\r\nleft join t_object to3 on to3.object_id = tc.End_Object_ID and (to3.stereotype = 'block' or to3.object_type = 'Part')\r\nleft join t_object classifier on classifier.ea_guid = to2.Classifier_guid and classifier.object_type = 'Activity'\r\nleft join t_connector tc2 on tc2.Start_Object_ID =  classifier.Object_ID and tc2.Stereotype = 'allocate'\r\nleft join t_object to4 on to4.object_id = tc2.End_Object_ID and (to4.stereotype = 'block' or to4.object_type = 'Part')\r\nleft join t_object to45 on to45.ea_guid = to4.PDATA1 and to45.Stereotype = 'block'\r\nleft join t_object to5 on to5.ea_guid = to3.PDATA1 and to5.Stereotype = 'block'\r\nwhere to2.Object_Type = 'Action' and partclassifier.object_id <> IFNULL(to3.object_id,0) and partclassifier.object_id <> IFNULL(to4.object_id,0) and partclassifier.object_id <> IFNULL(to5.object_id,0) and partclassifier.object_id <> IFNULL(to45.object_id,0)\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Elements Failing Rules",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Element Name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "GUID": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Rule": {
+                "aggregations": [
+                  "uniqueValues"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [
+    "overview"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timeRangeUpdatedDuringEditOrView": false,
+  "timepicker": {},
+  "timezone": "",
+  "title": "Behavioural Dashboard",
+  "uid": "a5ef22f9-7f84-46ce-9d02-58d5c16f6006",
+  "version": 20,
+  "weekStart": ""
+}

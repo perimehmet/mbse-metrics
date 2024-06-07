@@ -1,0 +1,170 @@
+databases:
+  db1:
+    dsn: mysql://root:PASSWORD123@mysql:3306/MBSE_DATABASE
+
+metrics:
+  Actors:
+    type: gauge
+    description: Number of actor elements
+  UseCases:
+    type: gauge
+    description: Number of use case elements
+  ruleValue:
+    type: gauge
+    description: Rule value
+    labels: [Rule, RuleType]
+  elements:
+    type: gauge
+    description: Number of model elements
+    labels: [Author, ElementStereotype]
+
+
+queries:
+  query1:
+    interval: 5
+    databases: [db1]
+    metrics: [Actors]
+    sql: |
+      select count(t_object.object_id) as 'Actors' from t_object 
+             left join t_package on t_package.package_id = t_object.package_id
+             where t_object.object_type = 'Actor'
+  query2:
+    interval: 5
+    databases: [db1]
+    metrics: [UseCases]
+    sql: |
+      select count(t_object.object_id) as 'UseCases' from t_object 
+             left join t_package on t_package.package_id = t_object.package_id
+             where t_object.object_type = 'UseCase'
+  query3:
+    interval: 5
+    databases: [db1]
+    metrics: [ruleValue]
+    sql: |
+     select 'R-01' as 'Rule', 'UseCase' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.start_object_id = t_object.object_id or t_connector.end_object_id = t_object.object_id
+             where t_object.object_type = 'UseCase' and t_connector.connector_id is null
+             union all
+     select 'R-02' as 'Rule', 'UseCase' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.start_object_id = t_object.object_id or t_connector.end_object_id = t_object.object_id
+             where t_object.object_type = 'Actor' and t_connector.connector_id is null
+             union all
+     select 'R-03' as 'Rule', 'UseCase' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_diagramobjects on t_diagramobjects.object_id = t_object.object_id
+             where t_object.object_type = 'Actor' and t_diagramobjects.Diagram_ID is null
+             union all
+     select 'R-04' as 'Rule', 'UseCase' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_diagramobjects on t_diagramobjects.object_id = t_object.object_id
+             where t_object.object_type = 'UseCase' and t_diagramobjects.Diagram_ID is null
+             union all
+     select 'R-05' as 'Rule', 'UseCase' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_xref on t_xref.Client = t_object.ea_guid
+             left join t_diagram on t_diagram.ea_guid = t_xref.Supplier 
+             where t_diagram.Diagram_ID is null and t_object.Object_Type = 'UseCase'
+
+  requirements:
+    interval: 5
+    databases: [db1]
+    metrics: [ruleValue]
+    sql: |
+     select 'R-16' as 'Rule', 'Requirement' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.End_Object_ID = t_object.Object_ID 
+             left join t_object satisfiedBy on satisfiedBy.Object_ID = t_connector.Start_Object_ID 
+             and satisfiedBy.Object_Type in ('activity','action')
+             where t_object.stereotype = 'FunctionalRequirement' and satisfiedBy.Object_ID is null 
+             union all
+     select 'R-17' as 'Rule', 'Requirement' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.End_Object_ID = t_object.Object_ID 
+             left join t_object satisfiedBy on satisfiedBy.Object_ID = t_connector.Start_Object_ID 
+             and (satisfiedBy.Stereotype in ('block', 'interfaceblock', 'proxyport') 
+             or satisfiedBy.Object_Type in ('Part','Signal'))
+             where t_object.stereotype = 'ExtendedRequirement' and satisfiedBy.Object_ID is null 
+             union all
+     select 'R-18' as 'Rule', 'Requirement' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.Start_Object_ID = t_object.Object_ID and (t_connector.Stereotype='deriveReqt' or t_connector.connector_type='Nesting')
+             where t_object.object_type = 'Requirement' and t_connector.connector_id is null
+             union all
+     select 'R-19' as 'Rule', 'Requirement' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_objectproperties on t_objectproperties.Object_ID =t_object.Object_ID and t_objectproperties.Property ='verifyMethod'
+             where t_objectproperties.value is null and t_object.Object_Type ='Requirement'
+             union all
+     select 'R-20' as 'Rule', 'Requirement' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             where t_object.Object_Type ='Requirement' and not REGEXP_LIKE(t_object.name, 'SR-FR-\\d{3}|SR-NFR-\\d{3}') 
+
+  structure:
+    interval: 5
+    databases: [db1]
+    metrics: [ruleValue]
+    sql: |
+     select 'R-06' as 'Rule', 'Structure' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.start_object_id = t_object.object_id
+             where t_object.object_type = 'class' and t_object.stereotype = 'block' and t_connector.connector_id is null
+             union all
+     select 'R-07' as 'Rule', 'Structure' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_object parent on parent.Object_ID = t_object.ParentID
+             where t_object.Object_Type = 'Port' and t_object.Stereotype is null and parent.Stereotype = 'block'
+             union all
+     select 'R-08' as 'Rule', 'Structure' as 'RuleType', count(t_connector.connector_id) as 'ruleValue' from t_connector
+             inner join t_object on t_object.Object_ID = t_connector.Start_Object_ID and t_object.Stereotype ='block'
+             where t_connector.Connector_Type ='Aggregation' and t_connector.SourceRole is null
+             union all
+     select 'R-09' as 'Rule', 'Structure' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_object parent on parent.Object_ID  = t_object.ParentID
+             where t_object.Object_Type ='Part' and parent.Stereotype ='block' and t_object.name is null
+
+  behaviour:
+    interval: 5
+    databases: [db1]
+    metrics: [ruleValue]
+    sql: |
+     select 'R-11' as 'Rule', 'Behaviour' as 'RuleType', count(to2.Object_ID) as 'ruleValue' from t_object to2
+             left join t_connector tc on tc.Start_Object_ID =  to2.Object_ID and tc.Stereotype = 'allocate'
+             left join t_object to3 on to3.object_id = tc.End_Object_ID and (to3.stereotype = 'block' or to3.object_type = 'Part')
+             left join t_object classifier on classifier.ea_guid = to2.Classifier_guid and classifier.object_type = 'Activity'
+             left join t_connector tc2 on tc2.Start_Object_ID =  classifier.Object_ID and tc2.Stereotype = 'allocate'
+             left join t_object to4 on to4.object_id = tc2.End_Object_ID and (to4.stereotype = 'block' or to4.object_type = 'Part')
+             where to2.Object_Type in ('Action', 'Activity') and to3.object_id is null and to4.object_id is null  
+             union all
+     select 'R-12' as 'Rule', 'Behaviour' as 'RuleType', count(t_object.Object_ID) as 'ruleValue' from t_object
+             left join t_object classifier on classifier.Object_ID = t_object.Classifier and classifier.Stereotype = 'block'
+             where t_object.Object_Type  = 'ActivityPartition' and classifier.Object_ID is null
+             union all
+     select 'R-13' as 'Rule', 'Behaviour' as 'RuleType', count(action_pin.Object_ID) as 'ruleValue' from t_object as action_pin
+             left join t_object start_action on start_action.Object_ID = action_pin.ParentID
+             left join t_object start_partition on start_partition.Object_ID = start_action.ParentID
+             left join t_object start_classifier on start_classifier.object_id = start_partition.classifier
+             left join t_connector object_flow on (object_flow.Start_Object_ID = action_pin.Object_ID or object_flow.end_Object_ID = action_pin.Object_ID) and object_flow.Connector_Type = 'ObjectFlow'
+             left join t_object end_pin on (object_flow.Start_Object_ID = end_pin.Object_ID or object_flow.end_Object_ID = end_pin.Object_ID) and end_pin.object_type = 'ActionPin'
+             left join t_object end_action on end_action.Object_ID = end_pin.ParentID
+             left join t_object end_partition on end_partition.Object_ID = end_action.ParentID
+             left join t_object end_classifier on end_classifier.object_id = end_partition.classifier
+             left join t_connector start_allocate on start_allocate.start_object_id = action_pin.Object_ID and start_allocate.Stereotype = 'allocate'
+             left join t_object start_port on start_port.object_id = start_allocate.end_object_id
+             left join t_object start_object on start_object.object_id = start_port.parentID
+             where action_pin.object_type = 'ActionPin' and end_partition.object_id <> start_partition.object_id 
+             and IFNULL(start_classifier.object_id,0) <> IFNULL(start_object.object_id,0)
+             union all
+     select 'R-14' as 'Rule', 'Behaviour' as 'RuleType', count(t_object.object_id) as 'ruleValue' from t_object
+             left join t_connector on t_connector.start_object_id = t_object.object_id
+             where t_object.object_type = 'activity' and t_connector.connector_id is null
+             union all
+     select 'R-15' as 'Rule', 'Behaviour' as 'RuleType', count(to2.object_id) as 'ruleValue' from t_object to2
+             left join t_object apartion on apartion.Object_ID =to2.ParentID
+             left join t_object partclassifier on partclassifier.Object_ID = apartion.Classifier and partclassifier.Stereotype = 'block'
+             left join t_connector tc on tc.Start_Object_ID =  to2.Object_ID and tc.Stereotype = 'allocate'
+             left join t_object to3 on to3.object_id = tc.End_Object_ID and (to3.stereotype = 'block' or to3.object_type = 'Part')
+             left join t_object classifier on classifier.ea_guid = to2.Classifier_guid and classifier.object_type = 'Activity'
+             left join t_connector tc2 on tc2.Start_Object_ID =  classifier.Object_ID and tc2.Stereotype = 'allocate'
+             left join t_object to4 on to4.object_id = tc2.End_Object_ID and (to4.stereotype = 'block' or to4.object_type = 'Part')
+             left join t_object to45 on to45.ea_guid = to4.PDATA1 and to45.Stereotype = 'block'
+             left join t_object to5 on to5.ea_guid = to3.PDATA1 and to5.Stereotype = 'block'
+             where to2.Object_Type = 'Action' and partclassifier.object_id <> IFNULL(to3.object_id,0) and partclassifier.object_id <> IFNULL(to4.object_id,0) and partclassifier.object_id <> IFNULL(to5.object_id,0) and partclassifier.object_id <> IFNULL(to45.object_id,0)
+
+  query4:
+    interval: 5
+    databases: [db1]
+    metrics: [elements]
+    sql: |
+     select t_object.Author, lower(ifnull(SUBSTRING_INDEX(SUBSTRING_INDEX(t_xref.Description , ';Name=', -1), ';', 1),t_object.object_type)) AS ElementStereotype, count(t_object.object_id) as elements from t_object
+            left join t_xref on t_xref.Client = t_object.ea_guid and t_xref.name='Stereotypes'
+            group by t_object.Author,ElementStereotype

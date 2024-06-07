@@ -1,0 +1,38 @@
+services:
+    mysql:
+        environment:
+            - TZ=Europe/London
+            - MYSQL_ROOT_PASSWORD=PASSWORD123
+            - MYSQL_DATABASE=MBSE_DATABASE
+            - MYSQL_USER=USER01
+            - MYSQL_PASSWORD=PASSWORD456
+        ports:
+            - 3306:3306/tcp
+        volumes:
+            - C:/dockerappdata/mysql:/var/lib/mysql
+            - C:/dockerappdata/init_sql:/docker-entrypoint-initdb.d/:ro
+        image: mysql:latest
+    query-exporter:
+        ports:
+            - 9560:9560/tcp
+        volumes:
+            - C:/dockerappdata/sqlexporter/config.yaml:/config.yaml
+        image: adonato/query-exporter:latest
+    prometheus:
+        ports:
+            - 9090:9090/tcp
+        volumes:
+            - C:/dockerappdata/prometheus/data:/prometheus
+            - C:/dockerappdata/prometheus/etc:/etc/prometheus/
+        image: prom/prometheus:latest
+    grafana:
+        image: grafana/grafana
+        ports:
+            - 3000:3000
+        environment:
+            - admin_user='admin'
+            - admin_password='admin'
+        volumes:
+            - C:/dockerappdata/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+            - C:/dockerappdata/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+            - C:/dockerappdata/grafana/dashboards:/var/lib/grafana/dashboards   
