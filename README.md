@@ -20,5 +20,9 @@ Code repository for Enterprise Architect and Grafana SQL queries.
 ![image](https://github.com/perimehmet/mbse-metrics/assets/80420699/7f9658a0-3417-477c-8fa6-8880bca80527)
 
 11. Add a new model to the repository and close/re-open the connection to the EA server
+12. Download [model_rules.xml](https://github.com/perimehmet/mbse-metrics/blob/main/model_rules.xml)
+13. Import XMI in EA and place at root of model
+
+![image](https://github.com/perimehmet/mbse-metrics/assets/80420699/d07e16ac-995d-4ec1-b9f8-7a3f92973b81)
 
 Start playing!
